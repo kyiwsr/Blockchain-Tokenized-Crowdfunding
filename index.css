@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', sans-serif;
+    color: #eee;
+    background-color: #222;
+}
+
+.goal h2 {
+    display: grid;
+    place-items: center;
+    height: 100px;
+}
+
+.raised-amount {
+    margin-top: 10px;
+    font-size: 3rem;
+    text-align: center;
+    color: #3cb371;
+}
+
+.goal-date-time {
+    font-family: "Dongle", sans-serif;
+    margin-top: 0px;
+    font-size: 3rem;
+    text-align: center;
+}
+
+#date-goal {
+    margin: 0px;
+}
+
+#time-left {
+    margin: -15px;
+}
+
+
+
+.btn {
+    margin-top: 100px;
+    text-align: center;
+    font-family: inherit;
+    font-size: 2rem;
+    padding: 1rem;
+}
+
+.btn.refund{
+    background-color: #ff033e;
+    margin-top: 0px;
+    margin-left: 50px;
+}
+
+.btn.donate{
+    margin-top: 0px;
+}
+
+.btn.refund:hover{
+    background-color: rgb(226, 23, 23);
+}
+
+.btn.donate:hover{
+    background-color: #ccc;
+}
