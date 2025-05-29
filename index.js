@@ -77,5 +77,31 @@ async function connectMetaMask() {
 		} catch (error) {
 			console.log("MetaMask connection failed:", error);
 		}
+	} else {
+		alert("MetaMask is not intalled");
+	}
+}
+
+//Load goal, raised amount, deadline
+async function loadCrowdFundDetails() {
+	try {
+
+		const [goal, deadline, raised, contributors] = await contract.getDetails();
+		const goalEth = ether.utils.formatEther(goal);
+		const raisedEth = ether.utils.formatEther(raised);
+
+		//Update HTML elements for goal amount & raised amount
+		document.getElementById("goal-amount").innerText = goalEth;
+		document.getElementById("raised-amount").innerText = raisedEth;
+
+		//Update HTML date element
+		const dueDate = new Date(deadline.toNumber() * 1000);
+		document.getElementById("dueDate").innerText = dueDate.toLocaleDateString();
+		document.getElementById("dueDate").setAttribute("datetime", dueDate.toISOString());
+
+		window.deadlineTimestamp = deadline.toNumber();
+
+	} catch (error) {
+		console.log("Error loading contract data:", error);
 	}
 }
