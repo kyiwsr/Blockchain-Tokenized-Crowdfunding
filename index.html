@@ -9,16 +9,21 @@
 <body>
 
     <div class="goal">
-        <h2>TARGET : ETH XXX.XXXX</h2>
+        <h2>TARGET : ETH <span class="goal-amount">XXX.XXXX</span> </h2>
     </div>
 
-    <div class="raised-amount">
-        <h1>ETH XXX.XXXX</h1>
+    <div class="amount">
+        <h1>ETH <span class="raised-amount">XXX.XXXX</span></h1>
     </div>
 
     <div class="goal-date-time">
-        <p id="date-goal">DUE DATE : 27/05/2025<time datetime="2025-05-27"></time></p>
-        <p id="time-left">TIME LEFT : 00:16:43<time datetime="14:42"></time></p>
+        <p id="date-goal">DUE DATE : <span>27/05/2025</span><time datetime="2025-05-27"></time></p>
+        <p id="time-left">TIME LEFT : <span>00:16:43</span><time datetime="14:42"></time></p>
+    </div>
+
+    <div class="input">
+        <label for="input">Enter Amount:</label> <br>
+        <input type="number" id="input" min="0.001" step="0.001">
     </div>
 
     <div class="btn">

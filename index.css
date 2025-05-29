@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 html {
     font-size: 62.5%;
@@ -13,13 +13,13 @@ body {
     background-color: #222;
 }
 
-.goal h2 {
-    display: grid;
-    place-items: center;
+.goal {
+    display: inline;
+    text-align: center;
     height: 100px;
 }
 
-.raised-amount {
+.amount {
     margin-top: 10px;
     font-size: 3rem;
     text-align: center;
@@ -41,10 +41,28 @@ body {
     margin: -15px;
 }
 
+.input {
+    text-align: center;
+    margin-top: 70px;
+}
 
+.input label {
+    font-size: 1.4rem;
+}
+
+.input input {
+    margin-top: 10px;
+    background: none;
+    font-size: 3rem;
+    font-family: "Funnel Sans", sans-serif;
+    padding: 1rem;
+    width: 25rem;
+    border: 4px solid #eee;
+    color: inherit;
+}
 
 .btn {
-    margin-top: 100px;
+    margin-top: 50px;
     text-align: center;
     font-family: inherit;
     font-size: 2rem;
