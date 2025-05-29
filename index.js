@@ -1,7 +1,7 @@
 // Smart Contract details
 console.log("Ethers.js loaded:", typeof ethers !== "undefined"); 
 
-const contractAddress = "";
+const contractAddress = "0xe110dc16529e2d192e121f5636c6e1cc1354506f";
 
 const contractABI = [
 	{
