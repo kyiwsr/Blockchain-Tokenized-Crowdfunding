@@ -13,6 +13,22 @@ body {
     background-color: #222;
 }
 
+.metamask {
+    margin-bottom: 100px;
+}
+
+#connectButton {
+    font-family: "Dongle", sans-serif;
+    font-size: 2rem;
+    border-radius: 10px;
+}
+
+#accountDisplay {
+    position: relative;
+    left: 3px;
+    font-size: 1.2rem;
+}
+
 .goal {
     display: inline;
     text-align: center;
