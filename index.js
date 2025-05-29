@@ -153,3 +153,26 @@ async function donate() {
 		alert("Donation failed. Check the console");
 	}
 }
+
+//Refund
+async function refund() {
+	try {
+
+		const tx = await contract.refund();
+
+		await tx.wait();
+
+		alert("Refund succesful");
+		loadCrowdFundDetails();
+
+	} catch (error) {
+		console.log("Refund failed:", error);
+		alert("Refund failed");
+	}
+}
+
+window.onload = () => {
+	document.getElementById("connectButton").onclick = connectMetaMask;
+	document.getElementById(".btn.donate").onclick = donate;
+	document.getElementById(".btn.refund").onclick = refund;
+};
