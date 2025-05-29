@@ -107,7 +107,7 @@ async function loadCrowdFundDetails() {
 }
 
 function startCountDown() {
-	setInterval(() => {
+	setInterval (() => {
 		if (!window.deadlineTimestamp) {
 			return;
 		}
@@ -125,6 +125,31 @@ function startCountDown() {
 		const secs = String(remaining % 60).padStart(2, "0");
 
 		document.getElementById("timeLeft").innerText = `${hours}:${mins}:${secs}`;
-		
+
 		}, 1000);
+}
+
+//Donate
+async function donate() {
+	const amount = document.getElementById("input").value;
+	if (!amount || isNaN(amount)) {
+		alert("Invalid amount");
+		return;
+	}
+
+	try {
+
+		const tx = await contract.contribute ({
+			value: ethers.utils.parseEther(amount)
+		});
+
+		await tx.wait();
+
+		alert("Contribution sucessful");
+		loadCrowdFundDetails();
+
+	} catch (error) {
+		console.log("Donation failed", error);
+		alert("Donation failed. Check the console");
+	}
 }
