@@ -105,3 +105,26 @@ async function loadCrowdFundDetails() {
 		console.log("Error loading contract data:", error);
 	}
 }
+
+function startCountDown() {
+	setInterval(() => {
+		if (!window.deadlineTimestamp) {
+			return;
+		}
+
+		const now = Math.floor(Date.now() / 1000);
+		const remaining = window.deadlineTimestamp - now;
+
+		if (remaining < 0) {
+			document.getElementById("timeLeft").innerText = "00:00:00";
+			return;
+		}
+
+		const hours = String(Math.floor(remaining / 3600)).padStart(2, "0");
+		const mins = String(Math.floor((remaining % 3600)) / 60 ).padStart(2, "0");
+		const secs = String(remaining % 60).padStart(2, "0");
+
+		document.getElementById("timeLeft").innerText = `${hours}:${mins}:${secs}`;
+		
+		}, 1000);
+}
