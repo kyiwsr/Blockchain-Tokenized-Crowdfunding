@@ -5,24 +5,107 @@ const contractAddress = "0x4dd9bcd3edcc16e62bbb350d055ee72532f3635a";
 
 const contractABI = [
 	{
+		"inputs": [],
+		"name": "contribute",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "refund",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "initialMessage",
-				"type": "string"
+				"internalType": "uint256",
+				"name": "_goal",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_durationInSeconds",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
 	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "contributor",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "Contributed",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "contributor",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "Refunded",
+		"type": "event"
+	},
+	{
 		"inputs": [],
-		"name": "message",
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "Withdrawn",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "checkBalance",
 		"outputs": [
 			{
-				"internalType": "string",
+				"internalType": "uint256",
 				"name": "",
-				"type": "string"
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -31,18 +114,116 @@ const contractABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "newMessage",
-				"type": "string"
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
-		"name": "setMessageAndDate",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"name": "contributions",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "contributorCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "deadline",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getDetails",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "_goal",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_deadline",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_totalRaised",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_contributorCount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "goal",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalRaised",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	}
-	
-];
+]
 
 let provider, signer, contract;
 
@@ -64,7 +245,7 @@ async function connectMetaMask() {
 
 			//Initialize ether.js objects
 			provider = new ethers.providers.Web3Provider(window.ethereum);
-			signer = provider.getSigner;
+			signer = provider.getSigner();
 			contract = new ethers.Contract(contractAddress, contractABI, signer);
 
 			//Log initialize
