@@ -1,7 +1,7 @@
 // Smart Contract details
 console.log("Ethers.js loaded:", typeof ethers !== "undefined"); 
 
-const contractAddress = "0xe110dc16529e2d192e121f5636c6e1cc1354506f";
+const contractAddress = "0x4dd9bcd3edcc16e62bbb350d055ee72532f3635a";
 
 const contractABI = [
 	{
@@ -41,6 +41,7 @@ const contractABI = [
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
+	
 ];
 
 let provider, signer, contract;
@@ -62,8 +63,8 @@ async function connectMetaMask() {
 			document.getElementById("accountDisplay").innerText = `Connected ${account}`;
 
 			//Initialize ether.js objects
-			provider = new ethers.providers.Web3provider(window.ethereum);
-			signer = provider.signer;
+			provider = new ethers.providers.Web3Provider(window.ethereum);
+			signer = provider.getSigner;
 			contract = new ethers.Contract(contractAddress, contractABI, signer);
 
 			//Log initialize
@@ -87,8 +88,8 @@ async function loadCrowdFundDetails() {
 	try {
 
 		const [goal, deadline, raised, contributors] = await contract.getDetails();
-		const goalEth = ether.utils.formatEther(goal);
-		const raisedEth = ether.utils.formatEther(raised);
+		const goalEth = ethers.utils.formatEther(goal);
+		const raisedEth = ethers.utils.formatEther(raised);
 
 		//Update HTML elements for goal amount & raised amount
 		document.getElementById("goal-amount").innerText = goalEth;
@@ -173,6 +174,6 @@ async function refund() {
 
 window.onload = () => {
 	document.getElementById("connectButton").onclick = connectMetaMask;
-	document.getElementById(".btn.donate").onclick = donate;
-	document.getElementById(".btn.refund").onclick = refund;
+	document.querySelector(".btn.donate").onclick = donate;
+	document.querySelector(".btn.refund").onclick = refund;
 };
