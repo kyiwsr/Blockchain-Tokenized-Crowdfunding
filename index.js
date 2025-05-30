@@ -269,6 +269,9 @@ async function loadCrowdFundDetails() {
 	try {
 
 		const [goal, deadline, raised, contributors] = await contract.getDetails();
+
+		const ownerAddress = await contract.owner();
+
 		const goalEth = ethers.utils.formatEther(goal);
 		const raisedEth = ethers.utils.formatEther(raised);
 
@@ -282,6 +285,9 @@ async function loadCrowdFundDetails() {
 		document.getElementById("dueDate").setAttribute("datetime", dueDate.toISOString());
 
 		window.deadlineTimestamp = deadline.toNumber();
+
+		const isOwner = ownerAddress.toLowerCase() == currentAccount.toLowerCase();
+		document.querySelector(".btn.withdraw").style.display = isOwner ? none : hidden;
 
 	} catch (error) {
 		console.log("Error loading contract data:", error);
@@ -353,8 +359,30 @@ async function refund() {
 	}
 }
 
+//Withdraw
+async function withdraw() {
+	try {
+		const tx = await contract.withdraw();
+		await tx.wait();
+		alert("Withdrawal successful");
+		loadCrowdFundDetails();
+	} catch (error) {
+		console.log("Withdraw failed:", error);
+		alert("Withdraw failed");
+	}
+
+	if (error.message.includes("Funding goal not met")) {
+      message = "Funding goal not reached yet";
+    } else if (error.message.includes("Deadline not yet reached")) {
+      message = "Deadline hasn't passed yet";
+    }
+
+	alert(messgae);
+}
+
 window.onload = () => {
 	document.getElementById("connectButton").onclick = connectMetaMask;
 	document.querySelector(".btn.donate").onclick = donate;
 	document.querySelector(".btn.refund").onclick = refund;
+	document.querySelector(".btn.withdraw").onclick = withdraw;
 };

@@ -93,12 +93,22 @@ body {
     margin-left: 50px;
 }
 
+.btn.withdraw{
+    background-color: #03ffd9ec;
+    margin-top: 0px;
+    margin-left: 50px;
+}
+
 .btn.donate{
     margin-top: 0px;
 }
 
 .btn.refund:hover{
     background-color: rgb(226, 23, 23);
+}
+
+.btn.withdraw:hover{
+    background-color: rgb(12, 152, 168);
 }
 
 .btn.donate:hover{
