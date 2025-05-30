@@ -5,20 +5,6 @@ const contractAddress = "0x4dd9bcd3edcc16e62bbb350d055ee72532f3635a";
 
 const contractABI = [
 	{
-		"inputs": [],
-		"name": "contribute",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "refund",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -73,13 +59,6 @@ const contractABI = [
 		"type": "event"
 	},
 	{
-		"inputs": [],
-		"name": "withdraw",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -109,6 +88,13 @@ const contractABI = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "contribute",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -212,6 +198,13 @@ const contractABI = [
 	},
 	{
 		"inputs": [],
+		"name": "refund",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "totalRaised",
 		"outputs": [
 			{
@@ -221,6 +214,13 @@ const contractABI = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]
@@ -303,7 +303,7 @@ function startCountDown() {
 		}
 
 		const hours = String(Math.floor(remaining / 3600)).padStart(2, "0");
-		const mins = String(Math.floor((remaining % 3600)) / 60 ).padStart(2, "0");
+		const mins = String(Math.floor((remaining % 3600) / 60 )).padStart(2, "0");
 		const secs = String(remaining % 60).padStart(2, "0");
 
 		document.getElementById("timeLeft").innerText = `${hours}:${mins}:${secs}`;
