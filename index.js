@@ -1,7 +1,7 @@
 // Smart Contract details
 console.log("Ethers.js loaded:", typeof ethers !== "undefined"); 
 
-const contractAddress = "0x40eF2963903C1617CA60911f72aF18fbC144Aa48";
+const contractAddress = "0x0a872e6e96414e68877deef63e7a9e1ec8cfd716";
 
 const contractABI = [
 	{
@@ -270,6 +270,8 @@ async function loadCrowdFundDetails() {
 
 		const [goal, deadline, raised, contributors] = await contract.getDetails();
 
+		const currentAccount = await signer.getAddress();
+
 		const ownerAddress = await contract.owner();
 
 		const goalEth = ethers.utils.formatEther(goal);
@@ -287,7 +289,11 @@ async function loadCrowdFundDetails() {
 		window.deadlineTimestamp = deadline.toNumber();
 
 		const isOwner = ownerAddress.toLowerCase() == currentAccount.toLowerCase();
-		document.querySelector(".btn.withdraw").style.display = isOwner ? none : hidden;
+		if (isOwner) {
+			document.querySelector(".btn.withdraw").removeAttribute("hidden");
+		} else {
+			document.querySelector(".btn.withdraw").setAttribute("hidden","");
+		}
 
 	} catch (error) {
 		console.log("Error loading contract data:", error);
