@@ -1,7 +1,7 @@
 // Smart Contract details
 console.log("Ethers.js loaded:", typeof ethers !== "undefined"); 
 
-const contractAddress = "0x0a872e6e96414e68877deef63e7a9e1ec8cfd716";
+const contractAddress = "0x22a0a67ED3986508b52031b08770234F75be36d1";
 
 const contractABI = [
 	{
@@ -144,6 +144,19 @@ const contractABI = [
 	},
 	{
 		"inputs": [],
+		"name": "fundsWithdrawn",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getDetails",
 		"outputs": [
 			{
@@ -165,6 +178,11 @@ const contractABI = [
 				"internalType": "uint256",
 				"name": "_contributorCount",
 				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_fundsWithdrwan",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -222,6 +240,10 @@ const contractABI = [
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
+	},
+	{
+		"stateMutability": "payable",
+		"type": "receive"
 	}
 ]
 
@@ -268,10 +290,9 @@ async function connectMetaMask() {
 async function loadCrowdFundDetails() {
 	try {
 
-		const [goal, deadline, raised, contributors] = await contract.getDetails();
+		const [goal, deadline, raised, contributors, fundsWithdrawn] = await contract.getDetails();
 
 		const currentAccount = await signer.getAddress();
-
 		const ownerAddress = await contract.owner();
 
 		const goalEth = ethers.utils.formatEther(goal);
@@ -381,6 +402,8 @@ async function withdraw() {
       message = "Funding goal not reached yet";
     } else if (error.message.includes("Deadline not yet reached")) {
       message = "Deadline hasn't passed yet";
+    } else if (error.message.includes("Funds already withdrawn")) {
+        message = "Funds already withdrawn";
     }
 
 	alert(messgae);
