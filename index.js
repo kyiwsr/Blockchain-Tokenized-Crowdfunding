@@ -1,9 +1,23 @@
 // Smart Contract details
 console.log("Ethers.js loaded:", typeof ethers !== "undefined"); 
 
-const contractAddress = "0x22a0a67ED3986508b52031b08770234F75be36d1";
+const contractAddress = "0x367cbab7865bfc03b204bd3ad0d800f351be851b";
 
 const contractABI = [
+	{
+		"inputs": [],
+		"name": "contribute",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "refund",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
 	{
 		"inputs": [
 			{
@@ -59,6 +73,13 @@ const contractABI = [
 		"type": "event"
 	},
 	{
+		"inputs": [],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -88,13 +109,6 @@ const contractABI = [
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "contribute",
-		"outputs": [],
-		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -181,7 +195,7 @@ const contractABI = [
 			},
 			{
 				"internalType": "bool",
-				"name": "_fundsWithdrwan",
+				"name": "_fundsWithdrawn",
 				"type": "bool"
 			}
 		],
@@ -216,13 +230,6 @@ const contractABI = [
 	},
 	{
 		"inputs": [],
-		"name": "refund",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "totalRaised",
 		"outputs": [
 			{
@@ -233,17 +240,6 @@ const contractABI = [
 		],
 		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "withdraw",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"stateMutability": "payable",
-		"type": "receive"
 	}
 ]
 
@@ -293,6 +289,7 @@ async function loadCrowdFundDetails() {
 		const [goal, deadline, raised, contributors, fundsWithdrawn] = await contract.getDetails();
 
 		const currentAccount = await signer.getAddress();
+
 		const ownerAddress = await contract.owner();
 
 		const goalEth = ethers.utils.formatEther(goal);
@@ -310,10 +307,11 @@ async function loadCrowdFundDetails() {
 		window.deadlineTimestamp = deadline.toNumber();
 
 		const isOwner = ownerAddress.toLowerCase() == currentAccount.toLowerCase();
+
 		if (isOwner) {
-			document.querySelector(".btn.withdraw").removeAttribute("hidden");
-		} else {
-			document.querySelector(".btn.withdraw").setAttribute("hidden","");
+			document.querySelector(".btn.withdraw").removeAttribute("hidden",);
+		} else{
+			document.querySelector(".btn.withdraw").setAttribute("hidden", "true");
 		}
 
 	} catch (error) {
@@ -395,19 +393,32 @@ async function withdraw() {
 		loadCrowdFundDetails();
 	} catch (error) {
 		console.log("Withdraw failed:", error);
-		alert("Withdraw failed");
+
+		let message;
+
+		if (error.message.includes("Funding goal not met")) {
+		message = "Funding goal not reached yet";
+		} else if (error.message.includes("Deadline not yet reached")) {
+		message = "Deadline hasn't passed yet";
+		}
+
+		alert(message);
+
 	}
-
-	if (error.message.includes("Funding goal not met")) {
-      message = "Funding goal not reached yet";
-    } else if (error.message.includes("Deadline not yet reached")) {
-      message = "Deadline hasn't passed yet";
-    } else if (error.message.includes("Funds already withdrawn")) {
-        message = "Funds already withdrawn";
-    }
-
-	alert(messgae);
 }
+
+// async function debugWithdrawConditions() {
+// 	const [goal, deadline, totalRaised, , fundsWithdrawn] = await contract.getDetails();
+// 	const now = Math.floor(Date.now() / 1000);
+
+// 	console.log("Goal:", ethers.utils.formatEther(goal));
+// 	console.log("Raised:", ethers.utils.formatEther(totalRaised));
+// 	console.log("Deadline:", new Date(deadline * 1000));
+// 	console.log("Now:", new Date(now * 1000));
+// 	console.log("Funds withdrawn:", fundsWithdrawn);
+// }
+
+// debugWithdrawConditions()
 
 window.onload = () => {
 	document.getElementById("connectButton").onclick = connectMetaMask;
